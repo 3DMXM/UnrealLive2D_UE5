@@ -11,47 +11,49 @@ public class UnrealLive2D : ModuleRules
 	public UnrealLive2D(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
+
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
+				"UnrealLive2D/Private/Draw"
 			}
 			);
-				
-		
+
+
 		PrivateIncludePaths.AddRange(
 			new string[] {
-                "ThirdParty/CubismLibrary/include",
-				"UnrealLive2D/Private/FrameWork/src"
+				"ThirdParty/CubismLibrary/include",
+				"UnrealLive2D/Private/FrameWork/src",
+				"UnrealLive2D/Private/Draw"
 				// ... add other private include paths required here ...
 			}
 			);
-			
-		
+
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
-                "Engine",
+				"Engine",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
-			
-		
+
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
 				// ... add private dependencies that you statically link with here ...	
                 "CoreUObject",
-                "Projects",
-                "RenderCore",
-                "SlateCore",
-                "RHI",
-                "Projects",
+				"Projects",
+				"RenderCore",
+				"SlateCore",
+				"RHI",
+				"Projects",
 			}
-            );
-		
-		
+			);
+
+
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
@@ -63,19 +65,19 @@ public class UnrealLive2D : ModuleRules
 		PrivateDefinitions.Add("CSM_CORE_WIN32_DLL=0");
 
 		var ThirdPartyPath = Path.GetFullPath(Path.Combine(ModuleDirectory, "../ThirdParty/"));
-    var CubismLibPath = ThirdPartyPath + "CubismLibrary/";
+		var CubismLibPath = ThirdPartyPath + "CubismLibrary/";
 
-    if (Target.Platform == UnrealTargetPlatform.Win64)
-    {
-      CubismLibPath += "lib/windows/x86_64/142";
-      PublicAdditionalLibraries.Add(String.Format(CubismLibPath + "/Live2DCubismCore_MTd.lib"));
-    }
-    else if (Target.Platform == UnrealTargetPlatform.Linux)
-    {
-      CubismLibPath += "dll/linux/x86_64";
-      PublicAdditionalLibraries.Add(String.Format(CubismLibPath + "/libLive2DCubismCore.so"));
-      RuntimeDependencies.Add("$(TargetOutputDir)/libLive2DCubismCore.so",
-        String.Format(CubismLibPath + "/libLive2DCubismCore.so"));
-    }
-  }
+		if (Target.Platform == UnrealTargetPlatform.Win64)
+		{
+			CubismLibPath += "lib/windows/x86_64/142";
+			PublicAdditionalLibraries.Add(String.Format(CubismLibPath + "/Live2DCubismCore_MTd.lib"));
+		}
+		else if (Target.Platform == UnrealTargetPlatform.Linux)
+		{
+			CubismLibPath += "dll/linux/x86_64";
+			PublicAdditionalLibraries.Add(String.Format(CubismLibPath + "/libLive2DCubismCore.so"));
+			RuntimeDependencies.Add("$(TargetOutputDir)/libLive2DCubismCore.so",
+			  String.Format(CubismLibPath + "/libLive2DCubismCore.so"));
+		}
+	}
 }

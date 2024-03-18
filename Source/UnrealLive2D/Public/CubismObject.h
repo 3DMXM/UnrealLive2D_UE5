@@ -7,7 +7,7 @@
 #include <Tickable.h>
 #include "Templates/SharedPointer.h"
 #include "Components/ActorComponent.h"
-#include "Draw/CubismConfig.h"
+#include "../Private/Draw/CubismConfig.h"
 #include "CubismUeTypes.h"
 #include "CubismObject.generated.h"
 
@@ -16,12 +16,12 @@ class UCubismAsset;
 struct FModelInfo;
 
 /**
- * 
+ *
  */
-UCLASS(Blueprintable,BlueprintType)
+UCLASS(Blueprintable, BlueprintType)
 class UNREALLIVE2D_API UCubismObject : public UObject, public FTickableGameObject
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     UCubismObject();
@@ -35,23 +35,22 @@ public:
     virtual bool IsTickable() const override;
     //////////////////////////////////////////////////////////////////////////
 
-
-	void BeginDestroy() override;
+    void BeginDestroy() override;
 
     //////////////////////////////////////////////////////////////////////////
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "CubismModel")
-	void LoadFromPath(const FString& InPath);
+    UFUNCTION(BlueprintCallable, Category = "CubismModel")
+    void LoadFromPath(const FString &InPath);
 
     UFUNCTION(BlueprintCallable)
     void SetUpdatePaused(bool InIsPaused);
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Render")
-	class UTextureRenderTarget2D* TargetRender = nullptr;
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Render")
+    class UTextureRenderTarget2D *TargetRender = nullptr;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Render")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Render")
     FModelConfig ModelConfig;
 
 private:
@@ -63,20 +62,20 @@ public:
     int32 TickRate = 30;
 
 private:
-	float _TimeSeconds = 0.0f;
-	float _TimeNextUpdate = 0.0f;
+    float _TimeSeconds = 0.0f;
+    float _TimeNextUpdate = 0.0f;
     float _TimeLastUpdate = 0.0f;
 
     bool _bPauseUpdate = false;
 
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 public:
     /** Event called while motion play ends */
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
     void OnMotionPlayeEnd();
 
     UFUNCTION(BlueprintCallable)
-    bool OnTap(const FVector2D& InPos);
+    bool OnTap(const FVector2D &InPos);
 
     /**
      * Motion control
@@ -86,5 +85,5 @@ public:
      * @param InPriority Priori of motion to play
      */
     UFUNCTION(BlueprintCallable)
-    void PlayMotion(const FString& InName, const int32 InNo, const EMotionPriority InPriority = EMotionPriority::EMP_Normal);
+    void PlayMotion(const FString &InName, const int32 InNo, const EMotionPriority InPriority = EMotionPriority::EMP_Normal);
 };
